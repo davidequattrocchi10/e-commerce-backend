@@ -12,7 +12,19 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('order_details', function (Blueprint $table) {
+            // $table->foreignId('order_id')->references('id')->on('orders')->primary();
+            // $table->foreignId('country_code')->references('code')->on('countries');
             $table->id();
+            $table->string('first_name');
+            $table->string('last_name');
+            $table->string('email')->nullable();
+            $table->string('phone')->nullable();
+            $table->string('address1', 255);
+            $table->string('address2', 255);
+            $table->string('city', 255);
+            $table->string('state', 45)->nullable();
+            $table->string('zipcode', 45);
+            $table->string('country_code', 3);
             $table->timestamps();
         });
     }
