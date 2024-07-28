@@ -1,5 +1,5 @@
 <template>
-    <div class="w-[200px] bg-blue-800 text-gray-300 py-4 px-2">
+    <div class="w-[200px] transition-all bg-blue-800 text-gray-300 py-4 px-2">
         <router-link :to="{ name: 'app.dashboard' }"
             class="flex items-center py-2 px-3 rounded transition-colors hover:bg-black/30 mb-2">
             <span class="mr-2">
@@ -19,7 +19,7 @@
             </span>
         </router-link>
 
-        <router-link :to="{ name: 'app.dashboard' }"
+        <router-link :to="{ name: 'app.products' }"
             class="flex items-center py-2 px-3 rounded transition-colors hover:bg-black/30 mb-2">
             <span class="mr-2">
                 <ListBulletIcon class="h-6 w-6" />
