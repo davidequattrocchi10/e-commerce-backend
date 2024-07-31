@@ -5,12 +5,16 @@ import RequestPassword from '../views/RequestPassword.vue';
 import ResetPassword from '../views/ResetPassword.vue';
 import AppLayout from '../components/AppLayout.vue';
 import Products from '../views/Products.vue';
+import store from '../store';
 
 const routes = [
     {
         path: '/app',
         name: 'app',
         component: AppLayout,
+        meta: {
+            requiresAuth: true
+        },
         children: [
             {
                 path: 'dashboard',
@@ -28,11 +32,17 @@ const routes = [
     {
         path: '/login',
         name: 'login',
+        meta: {
+            requiresGuest: true
+        },
         component: Login
     },
     {
         path: '/request-password',
         name: 'requestPassword',
+        meta: {
+            requiresGuest: true
+        },
         component: RequestPassword
     },
     {
@@ -40,6 +50,9 @@ const routes = [
         // :token is a dynamic segment in the route path. This route will match any URL that starts with /reset-password/ 
         // followed by any value (the token). Examples of matching URLs: /reset-password/abc123, /reset-password/1234.
         name: 'resetPassword',
+        meta: {
+            requiresGuest: true
+        },
         component: ResetPassword
     }
 ];
@@ -48,6 +61,16 @@ const router = createRouter({
     history: createWebHistory(),
     routes
 
+})
+
+router.beforeEach((to, from, next) => {
+    if (to.meta.requiresAuth && !store.state.user.token) {
+        next({ name: 'login' })
+    } else if (to.meta.requiresGuest && store.state.user.token) {
+        next({ name: 'app.dashboard' })
+    } else {
+        next()
+    }
 })
 
 export default router;
